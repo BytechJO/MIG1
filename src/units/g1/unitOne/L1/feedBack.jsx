@@ -29,8 +29,8 @@ function FeedBack() {
         <StarRating value={0} />
         <StarRating value={0} />
         <StarRating value={0} />
+      
       </div>
-
       <button
         type="button"
         id="feedBtn"

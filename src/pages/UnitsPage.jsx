@@ -3,6 +3,7 @@ import { AnimatedBackground } from "./AnimatedBackground";
 import { AnimatedCharacter } from "./AnimatedCharacter";
 import { BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const units = [
   { id: 1, path: "/unit/One/lesson/1", color: '#6a3996', name: 'Unit One' },
@@ -13,17 +14,14 @@ const units = [
 
 export default function UnitsPage({ onUnitSelect }) {
   const navigate = useNavigate();
+  const [openUnitId, setOpenUnitId] = useState(null);
 
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
 
-      {/* Animated Background */}
       <AnimatedBackground />
-
-      {/* Animated Character */}
       <AnimatedCharacter />
 
-      {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,16 +35,14 @@ export default function UnitsPage({ onUnitSelect }) {
       {/* Units Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl w-full relative z-10">
         {units.map((unit, index) => (
-          <motion.button
+          <motion.div
             key={unit.id}
-            onClick={() => navigate(unit.path)}
-            className="bg-white rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all relative overflow-hidden group flex items-center gap-4 sm:gap-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.03, y: -5 }}
-            whileTap={{ scale: 0.98 }}
+            role="button"
+            tabIndex={0}
+            onClick={() => setOpenUnitId(openUnitId === unit.id ? null : unit.id)}
+            className="bg-white rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all relative group flex items-center gap-4 sm:gap-6 cursor-pointer"
           >
+
             {/* Colored Icon Background */}
             <div
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-white shadow-md"
@@ -81,7 +77,51 @@ export default function UnitsPage({ onUnitSelect }) {
               className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity rounded-3xl"
               style={{ backgroundColor: unit.color }}
             />
-          </motion.button>
+
+            {openUnitId === unit.id && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute top-full left-0 w-full bg-white rounded-2xl shadow-lg mt-2 p-4 z-20 flex flex-col gap-3"
+              >
+                {/* Story */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(unit.path);
+                  }}
+                  className="py-2 px-4 rounded-xl hover:bg-gray-100 text-left"
+                >
+                  📖 Story
+                </button>
+
+                {/* Quiz */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`${unit.path}/quiz`);
+                  }}
+                  className="py-2 px-4 rounded-xl hover:bg-gray-100 text-left"
+                >
+                  📝 Quiz
+                </button>
+
+                {/* Feedback */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`${unit.path}/feedBack`);
+                  }}
+                  className="py-2 px-4 rounded-xl hover:bg-gray-100 text-left"
+                >
+                  💬 Feedback
+                </button>
+              </motion.div>
+            )}
+
+
+
+          </motion.div>
         ))}
       </div>
     </div>

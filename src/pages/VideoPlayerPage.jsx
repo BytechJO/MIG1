@@ -27,14 +27,6 @@ export default function VideoPlayerPage() {
     navigate('/UnitsPage');
   };
 
-  const handleQuizClick = () => {
-    navigate(`/unit/${unitId}/lesson/${lessonId}/quiz`);
-  };
-
-  const handleFeedbackClick = () => {
-    navigate(`/unit/${unitId}/lesson/${lessonId}/feedback`);
-  };
-
   return (
     <div className="h-screen w-screen relative overflow-hidden flex flex-col">
       <AnimatedBackground />
@@ -97,8 +89,8 @@ export default function VideoPlayerPage() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <Home className="border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 text-base" />
-            <span className="border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 text-base">Units</span>
+            <Home className="border-[#b99cfa] text-[#6a3996] hover:bg-purple-50 text-base" />
+            <span className="border-[#b99cfa] text-[#6a3996] hover:bg-purple-50 text-base">Units</span>
           </motion.button>
 
           {/* RIGHT SECTION - Lesson, Quiz & Feedback Buttons */}
@@ -106,7 +98,7 @@ export default function VideoPlayerPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-3 ml-52"
+            className="flex items-center gap-3 ml-96"
           >
             {/* Lesson Buttons */}
             {lessons.map((l) => (
@@ -114,7 +106,7 @@ export default function VideoPlayerPage() {
                 key={l.number}
                 onClick={() => handleLessonSelect(l.number)}
                 className={`px-4 py-2 rounded-xl border font-medium text-sm flex items-center gap-2 ${
-                  Number(lessonId) === l.number ? '' : 'border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50'
+                  Number(lessonId) === l.number ? '' : 'border-[#b99cfa] text-[#6a3996] hover:bg-purple-50'
                 }`}
                 style={
                   Number(lessonId) === l.number
@@ -127,33 +119,6 @@ export default function VideoPlayerPage() {
               </button>
             ))}
 
-            {/* Quiz Button */}
-            <motion.button
-              onClick={handleQuizClick}
-              className="px-4 py-2 rounded-xl border border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 font-medium text-sm flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 30px -5px rgba(107, 64, 200, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ClipboardCheck className="w-5 h-5" />
-              Quiz
-            </motion.button>
-
-            {/* Feedback Button */}
-            <motion.button
-              onClick={handleFeedbackClick}
-              className="px-4 py-2 rounded-xl border border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 font-medium text-sm flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 30px -5px rgba(107, 64, 200, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <MessageSquare className="w-5 h-5" />
-              Feedback
-            </motion.button>
 
           </motion.div>
 

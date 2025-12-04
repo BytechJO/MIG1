@@ -14,6 +14,7 @@ export const QuizPage = () => {
   const [answers, setAnswers] = useState({ q1: null, q2: null, q3: null });
   const [results, setResults] = useState({ q1: null, q2: null, q3: null });
   const [showSkip, setShowSkip] = useState(false);
+  const [showtry, setshowtry] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +37,7 @@ export const QuizPage = () => {
 
     setResults(newResults);
     setShowSkip(true);
+    setshowtry(true);
 
     const score = Object.values(newResults).filter(Boolean).length;
     const totalQuestions = Object.keys(newResults).length;
@@ -60,6 +62,15 @@ export const QuizPage = () => {
 
   const handleSkip = () => {
     navigate(`/unit/${unitId}/lesson/${lessonId}/feedBack`);
+  };
+
+  const handleTryAgain = () => {
+    setAnswers({ q1: null, q2: null, q3: null });
+    setResults({ q1: null, q2: null, q3: null });
+    setShowSkip(true);
+    setshowtry(true);
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => (radio.checked = false));
   };
 
   return (
@@ -146,6 +157,12 @@ export const QuizPage = () => {
               <button type="button" className="skip-btn" onClick={handleSkip}>
                 Skip
               </button>
+            )}
+
+            {showtry &&(
+            <button className="try-btn" onClick={handleTryAgain}>
+              try again
+            </button>
             )}
 
           </div>

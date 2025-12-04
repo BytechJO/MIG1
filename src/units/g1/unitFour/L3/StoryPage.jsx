@@ -25,7 +25,7 @@ export const StoryPage = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showBubble, setShowBubble] = useState(true);
   const [showBanner, setShowBanner] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [playbackSpeed, setPlaybackSpeed] = useState(0.75);
   const [volume, setVolume] = useState(1);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [showSubtitles, setShowSubtitles] = useState(true);
@@ -574,25 +574,39 @@ export const StoryPage = () => {
           <div className="video-overlay" />
           <div className="controls-container">
             <div className="controlbbtn">
+
               <button onClick={handlePrevious} className="control-btn left-nav-btn">
                 <ChevronLeft className="w-8 h-8" />
               </button>
+
               <button onClick={handleNext} className="control-btn right-nav-btn">
                 <ChevronRight className="w-8 h-8" />
               </button>
+
             </div>
 
             <div className="controls-wrapper-new">
               <div className="controls-row">
                 <div className="controls-group-left">
-                  <button onClick={() => setShowSubtitles(!showSubtitles)} className="control-btn" title="Subtitles">
-                    <Subtitles className="w-6 h-6" />
-                    <span className="control-label">Subtitle</span>
-                  </button>
-                  <button onClick={() => setShowCaption(!showCaption)} className="control-btn" title="Caption">
+
+                  <button
+                    onClick={() => setShowCaption(!showCaption)}
+                    className={`control-btn ${!showCaption ? "disabled-btn" : ""}`}
+                    title="Caption"
+                  >
                     <MessageSquareText className="w-6 h-6" />
                     <span className="control-label">Caption</span>
                   </button>
+
+                  <button
+                    onClick={() => setShowSubtitles(!showSubtitles)}
+                    className={`control-btn ${!showSubtitles ? "disabled-btn" : ""}`}
+                    title="Subtitles"
+                  >
+                    <Subtitles className="w-6 h-6" />
+                    <span className="control-label">Subtitle</span>
+                  </button>
+
                   <div
                     className="volume-control"
                     onMouseEnter={() => setShowVolumeSlider(true)}

@@ -600,8 +600,7 @@ export const StoryPage = () => {
                     <MessageSquareText className="w-6 h-6" />
                     <span className="control-label">Caption</span>
                   </button>
-
-
+                  
                   <button
                     onClick={() => setShowSubtitles(!showSubtitles)}
                     className={`control-btn ${!showSubtitles ? "disabled-btn" : ""}`}

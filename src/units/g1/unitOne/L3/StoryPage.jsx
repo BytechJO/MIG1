@@ -28,7 +28,7 @@ export const StoryPage = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showBubble, setShowBubble] = useState(true);
   const [showBanner, setShowBanner] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [playbackSpeed, setPlaybackSpeed] = useState(0.75);
   const [volume, setVolume] = useState(1);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [showSubtitles, setShowSubtitles] = useState(true);
@@ -666,16 +666,25 @@ export const StoryPage = () => {
               <div className="controls-row">
                 <div className="controls-group-left">
 
-                  <button onClick={() => setShowSubtitles(!showSubtitles)} className="control-btn" title="Subtitles">
+                  <button
+                    onClick={() => setShowCaption(!showCaption)}
+                    className={`control-btn ${!showCaption ? "disabled-btn" : ""}`}
+                    title="Caption"
+                  >
+                    <MessageSquareText className="w-6 h-6" />
+                    <span className="control-label">Caption</span>
+                  </button>
+
+                  <button
+                    onClick={() => setShowSubtitles(!showSubtitles)}
+                    className={`control-btn ${!showSubtitles ? "disabled-btn" : ""}`}
+                    title="Subtitles"
+                  >
                     <Subtitles className="w-6 h-6" />
                     <span className="control-label">Subtitle</span>
                   </button>
 
-                  <button onClick={() => setShowCaption(!showCaption)} className="control-btn" title="Caption">
-                    {/* يمكنك تغيير الأيقونة إذا أردت */}
-                    <MessageSquareText className="w-6 h-5" />
-                    <span className="control-label">Caption</span>
-                  </button>
+
 
                   <div
                     className="volume-control"

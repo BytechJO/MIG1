@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState } from "react";
 import { motion } from "motion/react";
-import { Home, PlayCircle, ClipboardCheck, MessageSquare } from "lucide-react";
+import { Home, PlayCircle, ClipboardCheck, MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatedBackground } from "./AnimatedBackground";
 import { AnimatedCharacter } from "./AnimatedCharacter";
 import { useParams, useNavigate } from "react-router-dom";
@@ -43,16 +43,14 @@ const FeedbackWrapper = () => {
     setShowLessonDropdown(false); // إخفاء القائمة بعد الاختيار
   };
 
-  const handleQuizClick = () => {
-    navigate(`/unit/${unitId}/lesson/${lessonId}/quiz`);
-  };
-
-  const handleFeedbackClick = () => {
-    navigate(`/unit/${unitId}/lesson/${lessonId}/feedback`);
-  };
+ 
 
   const handleBackToUnits = () => {
     navigate("/UnitsPage");
+  };
+
+  const handlePrevious = () => {
+    navigate(-1);
   };
 
   if (!Component) return <div>feedback not found</div>;
@@ -63,6 +61,12 @@ const FeedbackWrapper = () => {
       <AnimatedCharacter />
 
       <div className="flex-1 p-4 sm:p-6 md:p-8 flex items-center justify-center overflow-hidden">
+
+        <button onClick={handlePrevious} className="feedquiz left">
+          <ChevronLeft className="w-8 h-8" />
+        </button>
+        
+
         <div className="max-w-5xl mx-auto relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -71,10 +75,12 @@ const FeedbackWrapper = () => {
             className="w-full h-full"
           >
             <Suspense fallback={<div>Loading...</div>}>
+
               <Component />
             </Suspense>
           </motion.div>
         </div>
+        
       </div>
 
       <div className="w-full h-[2px] bg-white/30 relative z-10"></div>
@@ -113,7 +119,7 @@ const FeedbackWrapper = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-3 ml-52"
+            className="flex items-center gap-3 ml-96"
           >
             {lessons.map((l) => (
               <button
@@ -131,33 +137,6 @@ const FeedbackWrapper = () => {
                 Lesson {l.number}
               </button>
             ))}
-
-            <motion.button
-              onClick={handleQuizClick}
-              className="px-4 py-2 rounded-xl border border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 font-medium text-sm flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 30px -5px rgba(107, 64, 200, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ClipboardCheck className="w-5 h-5" />
-              Quiz
-            </motion.button>
-
-            {/* Feedback Button */}
-            <motion.button
-              onClick={handleFeedbackClick}
-              className="px-4 py-2 rounded-xl border border-[#b99cfa] text-[#6B40C8] hover:bg-purple-50 font-medium text-sm flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 30px -5px rgba(107, 64, 200, 0.3)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <MessageSquare className="w-5 h-5" />
-              Feedback
-            </motion.button>
 
           </motion.div>
 

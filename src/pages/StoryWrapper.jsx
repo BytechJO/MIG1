@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import React from "react";
+import { h1 } from "motion/react-client";
 
 
 export default function StoryWrapper() {
@@ -14,7 +15,7 @@ export default function StoryWrapper() {
     setIsLoading(true);
     setError(null);
     setLessonData(`Unit: ${unitId}, Lesson: ${lessonId}`);
-    
+
     const loadStoryPage = async () => {
       try {
         const module = await import(
@@ -30,41 +31,48 @@ export default function StoryWrapper() {
     };
 
     loadStoryPage();
-  }, [unitId, lessonId]); 
+  }, [unitId, lessonId]);
 
   if (isLoading) {
     return (
-      
-        <div style={{ padding: 30, textAlign: 'center' }}>
-          <p>Loading...</p>
-        </div>
-      
+
+      <div style={{ padding: 30, textAlign: 'center' }}>
+        <p>Loading...</p>
+      </div>
+
     );
   }
 
   if (error) {
     return (
-      
-        <div style={{ padding: 30, textAlign: 'center', color: 'red' }}>
-          <p>somthing happend: {error}</p>
-        </div>
-      
+
+      <div style={{ padding: 30, textAlign: 'center', color: 'red' }}>
+        <p>somthing happend: {error}</p>
+      </div>
+
     );
   }
 
   if (!storyPageComponent) {
     return (
-      
-        <div style={{ padding: 30, textAlign: 'center' }}>
-          <p>Not Found</p>
-        </div>
-      
+
+      <div style={{ padding: 30, textAlign: 'center' }}>
+        <p>Not Found</p>
+      </div>
+
     );
   }
 
   const StoryPageComponent = storyPageComponent;
 
   return (
+    <>
+    <br />
+    <br />
+      <h1 className="text-4xl sm:text-5xl font-bold text-center text-[#6a3996] drop-shadow-lg">
+        Unit {unitId}
+      </h1>
       <StoryPageComponent unitId={unitId} lessonId={lessonId} />
+    </>
   );
 }

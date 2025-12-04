@@ -2,6 +2,7 @@ import Q1Image from './assets/Q1.png';
 import React, { useState } from 'react';
 import '../../shared/Quiz.css';
 import { useParams, useNavigate } from 'react-router-dom';
+
 import '../../shared/StoryPage.css';
 import ValidationAlert from '../../shared/ValidationAlert';
 import Timg from '../../../../assets/Gif/Approve.gif';
@@ -13,7 +14,8 @@ export const QuizPage = () => {
 
   const [answers, setAnswers] = useState({ q1: null, q2: null, q3: null });
   const [results, setResults] = useState({ q1: null, q2: null, q3: null });
-  const [showSkip, setShowSkip] = useState(true);
+  const [showSkip, setShowSkip] = useState(false);
+  const [showtry, setshowtry] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,12 +26,14 @@ export const QuizPage = () => {
     setAnswers({ q1: null, q2: null, q3: null });
     setResults({ q1: null, q2: null, q3: null });
     setShowSkip(true);
+    setshowtry(true);
 
     // إزالة التحديد عن كل radio
     const radios = document.querySelectorAll('input[type="radio"]');
     radios.forEach(radio => (radio.checked = false));
   };
 
+  
 
   const handleSubmit = () => {
     if (!answers.q1 || !answers.q2 || !answers.q3) {
@@ -47,6 +51,7 @@ export const QuizPage = () => {
 
     setResults(newResults);
     setShowSkip(true);
+    setshowtry(true);
 
     const score = Object.values(newResults).filter(Boolean).length;
     const totalQuestions = Object.keys(newResults).length;
@@ -147,6 +152,8 @@ export const QuizPage = () => {
               </ul>
             </div>
 
+            
+
             {/* Submit */}
             <button type="button" id="submitBtn" onClick={handleSubmit}>
               Submit
@@ -159,14 +166,16 @@ export const QuizPage = () => {
               </button>
             )}
 
+            {showtry &&(
             <button className="try-btn" onClick={handleTryAgain}>
               try again
             </button>
+            )}
 
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
